@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Games</title>
+    <style>
+        body {
+            font-family: Lexend;
+            padding: 10px;
+            line-height: 1.6;
+            background-color: #121212; /* Dark background for modern look */
+            color: #ffffff; /* White text for contrast */
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #333; /* Adds a subtle divider */
+        }
+        header h1 {
+            font-size: 1.2em;
+            margin: 0;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+        .search-bar input {
+            flex: 1;
+            padding: 5px 10px;
+            border-radius: 25px;
+            border: 1px solid #333;
+            background-color: #333;
+            color: #fff;
+            outline: none;
+        }
+        .search-bar input::placeholder {
+            color: #aaa; /* Light gray placeholder text */
+        }
+        .search-bar input:focus {
+            border-color: #555;
+        }
+        .link-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            padding: 10px;
+            background-color: #222;
+            border-radius: 8px;
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+        }
+        .link-item a {
+            color: #1e90ff;
+            text-decoration: none; /* Removes underline from links */
+            transition: color 0.3s;
+        }
+        .link-item a:hover {
+            text-decoration: underline; /* Underline on hover */
+            color: #00ced1; /* Changes color on hover for a nice effect */
+        }
+        .link-item .heart {
+            cursor: pointer;
+            color: #bbb;
+            margin-left: 10px;
+            transition: color 0.3s;
+        }
+        .link-item .heart:hover {
+            color: #ff0000; /* Red color on hover */
+        }
+        .link-item .heart.active {
+            color: #ff0000; /* Red color for active state */
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 5px;
+            }
+            header h1 {
+                font-size: 1em;
+            }
+            .search-bar input {
+                width: calc(100% - 20px); /* Full width on smaller screens */
+            }
+            .link-item {
+                flex-direction: column;
+            }
+            .link-item a {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Daily Games</h1>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search games..." onkeyup="filterLinks()">
+        </div>
+    </header>
+<main id="linksContainer">
+    <div class="link-item" data-url="https://www.nytimes.com/puzzles/spelling-bee">
+        <a href="https://www.nytimes.com/puzzles/spelling-bee">Spelling Bee</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.nytimes.com/games/wordle/index.html">
+        <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://bazingle.wook.wtf/">
+        <a href="https://bazingle.wook.wtf/">Bazingle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://flagle-game.com/">
+        <a href="https://flagle-game.com/">Flagle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://wafflegame.net/daily">
+        <a href="https://wafflegame.net/daily">Waffle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://squaredle.app/">
+        <a href="https://squaredle.app/">Squaredle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.nytimes.com/games/connections">
+        <a href="https://www.nytimes.com/games/connections">Connections</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://paperbeatsrock.fun/">
+        <a href="https://paperbeatsrock.fun/">Paper Beats Rock</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://tunezle.com/">
+        <a href="https://tunezle.com/">Tunezle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.cyadonia.com/">
+        <a href="https://www.cyadonia.com/">Cyadonia</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://hexcodle.com/">
+        <a href="https://hexcodle.com/">Hexcodle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://refractor-game.com/">
+        <a href="https://refractor-game.com/">Refractor</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.puzzlesociety.com/word-puzzles/thematik">
+        <a href="https://www.puzzlesociety.com/word-puzzles/thematik">Thematik</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.puzzlesociety.com/word-scrambles/hex-10">
+        <a href="https://www.puzzlesociety.com/word-scrambles/hex-10">Hex 10</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://contexto.me/">
+        <a href="https://contexto.me/">Contexto</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.chronophoto.app/">
+        <a href="https://www.chronophoto.app/">Chronophoto</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://neighborle.com/">
+        <a href="https://neighborle.com/">Neighborle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://00s.myretrotvs.com/">
+        <a href="https://00s.myretrotvs.com/">00s TV</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://plotwords.com/">
+        <a href="https://plotwords.com/">Plotwords</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://imois.in/games/travle/">
+        <a href="https://imois.in/games/travle/">Travle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://guessr.tv/">
+        <a href="https://guessr.tv/">Guessr</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.movie-music-quiz.com/">
+        <a href="https://www.movie-music-quiz.com/">Movie Music Quiz</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://heardledecades.com/">
+	<a href="https://heardledecades.com//">Heardle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://flikdle.com/">
+        <a href="https://flikdle.com/">Flikdle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.timeguessr.com/">
+        <a href="https://www.timeguessr.com/">Timeguessr</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://semantle.pimanrul.es/">
+        <a href="https://semantle.pimanrul.es/">Pimantle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://ohmyword.app/">
+        <a href="https://ohmyword.app/">Oh My Word</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://haikudle.art/">
+        <a href="https://haikudle.art/">Haikudle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://duotrigordle.com/">
+        <a href="https://duotrigordle.com/">Duotrigordle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://anigrams.us/">
+        <a href="https://anigrams.us/">Anigrams</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div
+    <div class="link-item" data-url="https://www.puzzlesociety.com/word-scrambles/upwordly">
+        <a href="https://www.puzzlesociety.com/word-scrambles/upwordly">Upwordly</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.puzzlesociety.com/word-scrambles/thruline">
+        <a href="https://www.puzzlesociety.com/word-scrambles/thruline">Thruline</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.puzzlesociety.com/crossword-puzzles/squared-away">
+        <a href="https://www.puzzlesociety.com/crossword-puzzles/squared-away">Squared Away</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.worchle.com/">
+        <a href="https://www.worchle.com/">Worchle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.telegraph.co.uk/news/plusword/">
+        <a href="https://www.telegraph.co.uk/news/plusword/">Plusword</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://dontwordle.com/">
+        <a href="https://dontwordle.com/">Don't Wordle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://thirdle.org/">
+        <a href="https://thirdle.org/">Thirdle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://cyphrgame.com/">
+        <a href="https://cyphrgame.com/">Cyphr</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://bythomas.co.uk/toppled/">
+        <a href="https://bythomas.co.uk/toppled/">Toppled</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://strands.game/">
+        <a href="https://strands.game/">Strands</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.gramjam.app/">
+        <a href="https://www.gramjam.app/">GramJam</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://fourwordgrid.web.app/#/">
+        <a href="https://fourwordgrid.web.app/#/">Fourword Grid</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.merriam-webster.com/games/quordle/#/">
+        <a href="https://www.merriam-webster.com/games/quordle/#/">Quordle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://jw-daily.web.app/#/">
+        <a href="https://jw-daily.web.app/#/">JW Daily</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://guessle.io/">
+        <a href="https://guessle.io/">Guessle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://crosswordle.vercel.app/?daily=1">
+        <a href="https://crosswordle.vercel.app/?daily=1">Crosswordle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.britannica.com/games/octordle/">
+        <a href="https://www.britannica.com/games/octordle/">Octordle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.miniplay.com/game/dordle">
+        <a href="https://www.miniplay.com/game/dordle">Dordle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://playforester.com/">
+        <a href="https://playforester.com/">Forester</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://play.woodle.today/">
+        <a href="https://play.woodle.today/">Woodle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://nerdlegame.com/">
+        <a href="https://nerdlegame.com/">Nerdle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://numbword.com/">
+        <a href="https://numbword.com/">Numbword</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://64ordle.au/">
+        <a href="https://64ordle.au/">64ordle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://framed.wtf/">
+        <a href="https://framed.wtf/">Framed</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://worldle.teuteuf.fr/">
+        <a href="https://worldle.teuteuf.fr/">Worldle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://dordlegame.io/">
+        <a href="https://dordlegame.io/">Dordle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://weavergame.org/">
+        <a href="https://weavergame.org/">Weaver</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.lewdlegame.com/App">
+        <a href="https://www.lewdlegame.com/App">Lewdle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://squirdle.fireblend.com/">
+        <a href="https://squirdle.fireblend.com/">Squirdle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://www.channle.net/">
+        <a href="https://www.channle.net/">Channle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+    <div class="link-item" data-url="https://luddle.net/">
+        <a href="https://luddle.net/">Luddle</a>
+        <div class="hearts">
+            <span class="heart" onclick="toggleHeart(this)">♡</span>
+        </div>
+    </div>
+	
+	
+</main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHeartData();
+            sortLinks();
+        });
+
+        function filterLinks() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const links = document.getElementsByClassName('link-item');
+
+            for (let i = 0; i < links.length; i++) {
+                const text = links[i].getElementsByTagName('a')[0].textContent || links[i].getElementsByTagName('a')[0].innerText;
+                if (text.toLowerCase().indexOf(filter) > -1) {
+                    links[i].style.display = "";
+                } else {
+                    links[i].style.display = "none";
+                }
+            }
+        }
+
+        function loadHeartData() {
+            const heartData = JSON.parse(localStorage.getItem('heartData')) || {};
+            const links = document.getElementsByClassName('link-item');
+
+            for (let i = 0; i < links.length; i++) {
+                const url = links[i].getAttribute('data-url');
+                const heart = links[i].getElementsByClassName('heart')[0];
+
+                if (heartData[url] && heartData[url].active) {
+                    heart.textContent = '❤️';
+                    heart.classList.add('active');
+                }
+            }
+        }
+
+        function toggleHeart(element) {
+            const linkItem = element.closest('.link-item');
+            const url = linkItem.getAttribute('data-url');
+            const heartData = JSON.parse(localStorage.getItem('heartData')) || {};
+
+            if (!heartData[url]) {
+                heartData[url] = { active: false };
+            }
+
+            if (element.classList.contains('active')) {
+                heartData[url].active = false;
+                element.textContent = '♡';
+                element.classList.remove('active');
+            } else {
+                heartData[url].active = true;
+                element.textContent = '❤️';
+                element.classList.add('active');
+            }
+
+            localStorage.setItem('heartData', JSON.stringify(heartData));
+            sortLinks();
+        }
+
+        function sortLinks() {
+            const linksContainer = document.getElementById('linksContainer');
+            const links = Array.from(document.getElementsByClassName('link-item'));
+
+            links.sort((a, b) => {
+                const heartA = a.getElementsByClassName('heart')[0].classList.contains('active');
+                const heartB = b.getElementsByClassName('heart')[0].classList.contains('active');
+                return heartB - heartA;
+            });
+
+            links.forEach(link => linksContainer.appendChild(link));
+        }
+    </script>
+</body>
+</html>
